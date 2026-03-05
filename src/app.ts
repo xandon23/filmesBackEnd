@@ -1,10 +1,20 @@
-import express from "express";
+import express, { Router, Request, Response } from "express";
+import UsersController from "./controllers/users.controller";
 
 const app = express();
 app.use(express.json());
 
-app.get("/home", (req, res) => {
-  res.send("Hello, Word Paraguai /home!");
+const router: Router = Router();
+
+router.get("/", (req: Request, res: Response) => {
+  res.send("Hello Word!");
 });
+
+router.get("/users", UsersController.list);
+router.get("/users/:id", UsersController.getById);
+router.post("/users", UsersController.create);
+router.delete("/users/:id", UsersController.remove);
+
+app.use(router);
 
 export default app;
