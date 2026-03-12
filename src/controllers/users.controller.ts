@@ -16,7 +16,8 @@ class UsersController {
 
   static async create(req: Request, res: Response) {
     const { name } = req.body;
-    const user = await User.create({ name: name });
+    const { email } = req.body;
+    const user = await User.create({ name: name, email: email });
     res.send(user);
   }
 
@@ -26,6 +27,25 @@ class UsersController {
     if (user) {
       res.send("User removed");
       user?.destroy();
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(204).send();
+  }
+
+  static async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const { name } = req.body;
+    const { email } = req.body;
+
+    const user = await User.findByPk(Number(id));
+    if (user) {
+      await user.update({
+        name: name,
+        email: email,
+      });
+      res.status(200).send(user);
     } else {
       res.status(404).json({ error: "User not found" });
     }

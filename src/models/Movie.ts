@@ -1,31 +1,27 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
-export class User extends Model {
+export class Movie extends Model {
   public id!: number;
-  public name!: string;
-  public email!: string;
+  public title!: string;
 }
 
-User.init(
+Movie.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
     },
   },
   {
     sequelize,
-    tableName: "Users",
+    tableName: "Movies",
   },
 );
 
-export default User;
+export default Movie;
