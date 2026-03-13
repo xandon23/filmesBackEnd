@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { Movie } from "../models/Movie";
+import Genre from "../models/Genre";
 
 class MoviesController {
   static async list(req: Request, res: Response) {
-    const movies = await Movie.findAll();
+    const movies = await Movie.findAll({
+      include: [{ model: Genre, as: "genre" }],
+    });
 
     res.send(movies);
   }
